@@ -1,0 +1,62 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: docker/php/Dockerfile
+    container_name: php-fpm-67
+    restart: always
+    working_dir: /var/www/
+    volumes:
+      - ./src:/var/www
+    depends_on:
+    - mysql
+    networks:
+      - Web67
+  nginx:
+    image: nginx:1.29-alpine
+    container_name: nginx-67
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - Web67
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-67
+    restart: always
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel67
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_67:/var/lib/mysql
+    networks:
+      - Web67
+
+
+  redis:
+    image: redis:8-alpine
+    container_name: redis-67
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - Web67
+    volumes:
+      - redis_67:/data
+    
+
+
+networks:
+  Web67:
+
+volumes:
+  mysql_67:
+  redis_67:
