@@ -37,3 +37,5 @@ if [ ! -f ./src/.env ]; then
         echo "------------------------------------------------"
         echo "Terminate: docker compose down"
 
+        docker compose exec app npm run dev
+
