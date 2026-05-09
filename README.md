@@ -1,12 +1,7 @@
 ## Step
 
-git clone
+```bash
+https://github.com/barqs70/dockerlaravel.git
 
-cd /
-
-docker compose up -d
-
-docker exec app composer install
-
-docker exec app php aritsan migrate
-
+```bash
+chmod +x setup.sh && ./setup.sh
