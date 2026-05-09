@@ -20,6 +20,12 @@ if [ ! -f ./src/.env ]; then
         echo "Installing Composer dependencies..."
         docker compose exec app composer install || error_exit "Composer Install" $LINENO
 
+        echo "Installing NPM dependencies..."
+        docker compose exec -T app npm install || error_exit "NPM Install" $LINENO
+
+        echo "Compiling assets..."
+        docker compose exec -T app npm run build || error_exit "NPM Build" $LINENO
+
         echo "Generating Laravel app key..."
         docker compose exec app php artisan key:generate || error_exit "Artisan Key Generate" $LINENO
 
@@ -28,5 +34,6 @@ if [ ! -f ./src/.env ]; then
 
         echo "------------------------------------------------"
         echo "Running at http://localhost"
+        echo "------------------------------------------------"
         echo "Terminate: docker compose down"
 
