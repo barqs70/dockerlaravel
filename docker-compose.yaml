@@ -29,16 +29,18 @@ services:
     container_name: mysql-67
     restart: always
     environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: laravel67
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-laravel67}
+      MYSQL_USER: ${DB_USERNAME:-laravel}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-laravel67}
     ports:
       - "3306:3306"
     volumes:
       - mysql_67:/var/lib/mysql
     networks:
       - Web67
+    env_file:
+      - ./src/.env
 
 
   redis:
