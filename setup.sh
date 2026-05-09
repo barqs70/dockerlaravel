@@ -28,4 +28,5 @@ if [ ! -f ./src/.env ]; then
 
         echo "------------------------------------------------"
         echo "Running at http://localhost"
+        echo "Terminate: docker compose down"
 
